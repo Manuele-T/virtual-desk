@@ -1,0 +1,5 @@
+{
+  "name": "The Virtual Desk",
+  "description": "A high-fidelity 3D portfolio experience using React Three Fiber.",
+  "requestFramePermissions": []
+}
