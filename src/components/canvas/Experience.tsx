@@ -31,7 +31,7 @@ const Experience: React.FC = () => {
         maxPolarAngle={Math.PI / 2.2} 
         enablePan={false}
         enableZoom={true}
-        minDistance={2}
+        minDistance={0.5}
         maxDistance={8}
       />
     </Canvas>

@@ -24,23 +24,23 @@ const Laptop: React.FC = () => {
     >
       {/* Laptop Base */}
       <mesh position={[0, 0, 0]} receiveShadow castShadow>
-        <boxGeometry args={[1.2, 0.05, 0.8]} />
+        <boxGeometry args={[1.2, 0.05, 0.7]} />
         <meshStandardMaterial color="#222" roughness={0.2} metalness={0.8} />
       </mesh>
 
       {/* Laptop Lid Group */}
-      <group position={[0, 0.025, -0.4]} rotation={[Math.PI / 10, 0, 0]}>
+      <group position={[0, 0.025, -0.35]} rotation={[Math.PI / 10, 0, 0]}>
         {/* Lid Casing */}
-        <mesh position={[0, 0.4, 0]} receiveShadow castShadow>
-          <boxGeometry args={[1.2, 0.8, 0.05]} />
+        <mesh position={[0, 0.35, 0]} receiveShadow castShadow>
+          <boxGeometry args={[1.2, 0.7, 0.05]} />
           <meshStandardMaterial color="#1a1a1a" roughness={0.2} metalness={0.8} />
         </mesh>
 
         {/* Screen Area */}
-        <group position={[0, 0.4, 0.026]}>
+        <group position={[0, 0.35, 0.026]}>
           {/* Bezel */}
           <mesh>
-            <planeGeometry args={[1.15, 0.75]} />
+            <planeGeometry args={[1.15, 0.65]} />
             <meshBasicMaterial color="black" />
           </mesh>
 
@@ -50,11 +50,12 @@ const Laptop: React.FC = () => {
             occlude
             position={[0, 0, 0.001]}
             style={{
-              width: '800px',
-              height: '500px',
+              width: '1280px',
+              height: '720px',
               opacity: 1,
             }}
-            scale={0.135} 
+            // FIX: Correct scale for 1280px content on 1.15 unit mesh
+            scale={0.035} 
           >
             <Screen />
           </Html>
