@@ -28,8 +28,8 @@ const Laptop: React.FC = () => {
         <meshStandardMaterial color="#222" roughness={0.2} metalness={0.8} />
       </mesh>
 
-      {/* Laptop Lid Group */}
-      <group position={[0, 0.025, -0.35]} rotation={[Math.PI / 10, 0, 0]}>
+      {/* Laptop Lid Group - perpendicular to the desk */}
+      <group position={[0, 0.025, -0.35]} rotation={[0, 0, 0]}>
         {/* Lid Casing */}
         <mesh position={[0, 0.35, 0]} receiveShadow castShadow>
           <boxGeometry args={[1.2, 0.7, 0.05]} />
