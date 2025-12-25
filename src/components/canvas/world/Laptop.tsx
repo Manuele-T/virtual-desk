@@ -13,7 +13,15 @@ const Laptop: React.FC = () => {
   }, [hovered, viewMode]);
 
   return (
-    <group position={[0, 0, 0]}>
+    <group 
+      position={[0, 0, 0]}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (viewMode === 'overview') setFocus();
+      }}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+    >
       {/* Laptop Base */}
       <mesh position={[0, 0, 0]} receiveShadow castShadow>
         <boxGeometry args={[1.2, 0.05, 0.8]} />
@@ -29,15 +37,7 @@ const Laptop: React.FC = () => {
         </mesh>
 
         {/* Screen Area */}
-        <group 
-          position={[0, 0.4, 0.026]} 
-          onClick={(e) => {
-            e.stopPropagation();
-            if (viewMode === 'overview') setFocus();
-          }}
-          onPointerOver={() => setHovered(true)}
-          onPointerOut={() => setHovered(false)}
-        >
+        <group position={[0, 0.4, 0.026]}>
           {/* Bezel */}
           <mesh>
             <planeGeometry args={[1.15, 0.75]} />

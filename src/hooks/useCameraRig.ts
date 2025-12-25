@@ -16,7 +16,7 @@ export const useCameraRig = () => {
   // Focus position: Directly in front of the laptop screen
   // Assuming laptop screen is roughly at (0, 0.5, 0) and facing +Z or similar depending on model rotation
   // We align these numbers with the Laptop component geometry
-  const focusPosition = new THREE.Vector3(0, 0.6, 1.2); 
+  const focusPosition = new THREE.Vector3(0, 0.6, 2.0); 
   const focusTarget = new THREE.Vector3(0, 0.4, 0);
 
   useEffect(() => {

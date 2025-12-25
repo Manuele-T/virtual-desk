@@ -6,11 +6,18 @@ const LaptopScreen: React.FC = () => {
   const currentProjectIndex = useStore((state) => state.currentProjectIndex);
   const nextProject = useStore((state) => state.nextProject);
   const prevProject = useStore((state) => state.prevProject);
+  const setFocus = useStore((state) => state.setFocus);
+  const viewMode = useStore((state) => state.viewMode);
   
   const project = projects[currentProjectIndex];
 
   return (
-    <div className="w-[800px] h-[500px] bg-neutral-900 text-white font-sans flex flex-col overflow-hidden select-none border border-neutral-800">
+    <div 
+      className="w-[800px] h-[500px] bg-neutral-900 text-white font-sans flex flex-col overflow-hidden select-none border border-neutral-800"
+      onClick={() => {
+        if (viewMode === 'overview') setFocus();
+      }}
+    >
       {/* Header / OS Bar */}
       <div className="h-8 bg-neutral-800 flex items-center px-4 justify-between border-b border-neutral-700">
         <div className="flex gap-2">
