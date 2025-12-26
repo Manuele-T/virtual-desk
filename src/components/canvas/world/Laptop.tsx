@@ -14,7 +14,7 @@ const Laptop: React.FC = () => {
 
   return (
     <group 
-      position={[0, 0, 0]}
+      position={[0, 0.1, 0]}
       onClick={(e) => {
         e.stopPropagation();
         if (viewMode === 'overview') setFocus();

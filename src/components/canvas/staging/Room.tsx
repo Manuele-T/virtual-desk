@@ -6,8 +6,8 @@ const Room: React.FC = () => {
   const viewMode = useStore((state) => state.viewMode);
 
   return (
-    <group position={[0, -0.05, 0]}>
-      {/* Desk Surface */}
+    <group position={[0, -0.8, 0]}>
+      {/* Floor */}
       <mesh 
         rotation={[-Math.PI / 2, 0, 0]} 
         position={[0, 0, 0]} 

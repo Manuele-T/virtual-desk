@@ -4,6 +4,7 @@ import { OrbitControls } from '@react-three/drei';
 import Lights from '@/components/canvas/staging/Lights';
 import Room from '@/components/canvas/staging/Room';
 import Laptop from '@/components/canvas/world/Laptop';
+import Desk from '@/components/canvas/world/Desk';
 import { useCameraRig } from '@/hooks/useCameraRig';
 
 const SceneContent = () => {
@@ -12,6 +13,7 @@ const SceneContent = () => {
     <>
       <Lights />
       <Room />
+      <Desk />
       <Laptop />
     </>
   );
