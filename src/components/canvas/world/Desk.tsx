@@ -148,6 +148,148 @@ const Desk: React.FC = () => {
           <meshStandardMaterial color="#1a0f05" roughness={0.4} metalness={0.4} />
         </mesh>
       </group>
+
+      {/* ========== DESK ACCESSORIES ========== */}
+      
+      {/* ========== DESK PLANT (Right side) ========== */}
+      <group position={[1.4, 0.08, -0.4]}>
+        {/* Pot */}
+        <mesh castShadow receiveShadow>
+          <cylinderGeometry args={[0.08, 0.06, 0.12, 16]} />
+          <meshStandardMaterial color="#b45309" roughness={0.9} />
+        </mesh>
+        {/* Soil */}
+        <mesh position={[0, 0.05, 0]}>
+          <cylinderGeometry args={[0.07, 0.07, 0.02, 16]} />
+          <meshStandardMaterial color="#3d2314" roughness={1} />
+        </mesh>
+        {/* Plant leaves - succulent style */}
+        <group position={[0, 0.1, 0]}>
+          {/* Center leaf */}
+          <mesh castShadow>
+            <sphereGeometry args={[0.04, 8, 6]} />
+            <meshStandardMaterial color="#22c55e" roughness={0.7} />
+          </mesh>
+          {/* Surrounding leaves */}
+          {[0, 1, 2, 3, 4].map((i) => (
+            <mesh 
+              key={i}
+              position={[
+                Math.cos((i / 5) * Math.PI * 2) * 0.04,
+                -0.02,
+                Math.sin((i / 5) * Math.PI * 2) * 0.04
+              ]}
+              castShadow
+            >
+              <sphereGeometry args={[0.035, 8, 6]} />
+              <meshStandardMaterial color="#16a34a" roughness={0.7} />
+            </mesh>
+          ))}
+        </group>
+      </group>
+
+      {/* ========== DESK LAMP (Left side) ========== */}
+      <group position={[-1.4, 0.08, -0.3]}>
+        {/* Lamp base */}
+        <mesh castShadow receiveShadow>
+          <cylinderGeometry args={[0.1, 0.12, 0.03, 16]} />
+          <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.8} />
+        </mesh>
+        {/* Lamp stem */}
+        <mesh position={[0, 0.25, 0]} castShadow>
+          <cylinderGeometry args={[0.015, 0.015, 0.45, 8]} />
+          <meshStandardMaterial color="#2a2a2a" roughness={0.4} metalness={0.7} />
+        </mesh>
+        {/* Lamp arm (angled) */}
+        <group position={[0, 0.47, 0]} rotation={[0, 0, Math.PI / 6]}>
+          <mesh castShadow>
+            <cylinderGeometry args={[0.012, 0.012, 0.35, 8]} />
+            <meshStandardMaterial color="#2a2a2a" roughness={0.4} metalness={0.7} />
+          </mesh>
+        </group>
+        {/* Lamp head */}
+        <group position={[0.15, 0.6, 0]} rotation={[0, 0, Math.PI / 4]}>
+          <mesh castShadow>
+            <coneGeometry args={[0.08, 0.12, 16, 1, true]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.7} side={2} />
+          </mesh>
+          {/* Light bulb glow */}
+          <mesh position={[0, -0.02, 0]}>
+            <sphereGeometry args={[0.03, 8, 8]} />
+            <meshStandardMaterial 
+              color="#fff5e6" 
+              emissive="#fff5e6" 
+              emissiveIntensity={2}
+            />
+          </mesh>
+          {/* Actual light source */}
+          <pointLight
+            position={[0, -0.05, 0]}
+            intensity={0.8}
+            distance={2}
+            color="#fff5e6"
+            castShadow
+          />
+        </group>
+      </group>
+
+      {/* ========== COFFEE MUG (Right of laptop) ========== */}
+      <group position={[0.9, 0.08, 0.35]}>
+        {/* Mug body */}
+        <mesh castShadow receiveShadow>
+          <cylinderGeometry args={[0.04, 0.035, 0.1, 16]} />
+          <meshStandardMaterial color="#1e40af" roughness={0.5} />
+        </mesh>
+        {/* Mug handle */}
+        <mesh position={[0.05, 0, 0]} rotation={[0, 0, Math.PI / 2]} castShadow>
+          <torusGeometry args={[0.025, 0.008, 8, 12, Math.PI]} />
+          <meshStandardMaterial color="#1e40af" roughness={0.5} />
+        </mesh>
+        {/* Coffee surface */}
+        <mesh position={[0, 0.04, 0]}>
+          <circleGeometry args={[0.035, 16]} rotation={[-Math.PI / 2, 0, 0]} />
+          <meshStandardMaterial color="#3d2314" roughness={0.3} />
+        </mesh>
+      </group>
+
+      {/* ========== NOTEBOOK/NOTEPAD (Left of laptop) ========== */}
+      <group position={[-0.85, 0.09, 0.25]} rotation={[0, -0.15, 0]}>
+        {/* Notepad */}
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={[0.18, 0.015, 0.24]} />
+          <meshStandardMaterial color="#fef3c7" roughness={0.9} />
+        </mesh>
+        {/* Notepad lines (decorative) */}
+        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+          <mesh key={i} position={[0, 0.008, -0.08 + i * 0.025]}>
+            <boxGeometry args={[0.15, 0.001, 0.002]} />
+            <meshStandardMaterial color="#93c5fd" />
+          </mesh>
+        ))}
+        {/* Pen */}
+        <group position={[0.12, 0.02, 0]} rotation={[0, 0.3, 0]}>
+          <mesh castShadow>
+            <cylinderGeometry args={[0.006, 0.006, 0.15, 8]} rotation={[0, 0, Math.PI / 2]} />
+            <meshStandardMaterial color="#1a1a1a" roughness={0.3} metalness={0.5} />
+          </mesh>
+          {/* Pen tip */}
+          <mesh position={[0.07, 0, 0]} castShadow>
+            <coneGeometry args={[0.006, 0.02, 8]} rotation={[0, 0, -Math.PI / 2]} />
+            <meshStandardMaterial color="#6b7280" metalness={0.8} roughness={0.2} />
+          </mesh>
+          {/* Pen clip */}
+          <mesh position={[-0.05, 0.007, 0]} castShadow>
+            <boxGeometry args={[0.04, 0.002, 0.008]} />
+            <meshStandardMaterial color="#6b7280" metalness={0.8} roughness={0.2} />
+          </mesh>
+        </group>
+      </group>
+
+      {/* ========== COASTER (for the mug) ========== */}
+      <mesh position={[0.9, 0.082, 0.35]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <circleGeometry args={[0.06, 24]} />
+        <meshStandardMaterial color="#78350f" roughness={0.8} />
+      </mesh>
     </group>
   );
 };
