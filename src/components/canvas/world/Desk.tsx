@@ -86,7 +86,7 @@ const Desk: React.FC = () => {
   return (
     <group position={[0, 0, 0]}>
       {/* Tabletop - main surface */}
-      <mesh position={[0, 0.05, 0]} receiveShadow castShadow>
+      <mesh position={[0, 0.04, 0]} receiveShadow castShadow>
         <boxGeometry args={[tableWidth, 0.08, tableDepth]} />
         <meshStandardMaterial 
           map={woodTexture}
@@ -94,27 +94,6 @@ const Desk: React.FC = () => {
           roughness={0.6} 
           metalness={0.1}
         />
-      </mesh>
-
-      {/* Tabletop edge trim - front */}
-      <mesh position={[0, 0.02, tableDepth / 2]} receiveShadow castShadow>
-        <boxGeometry args={[tableWidth + 0.02, edgeThickness, edgeThickness]} />
-        <meshStandardMaterial color="#1a0f05" roughness={0.5} metalness={0.1} />
-      </mesh>
-      {/* Tabletop edge trim - back */}
-      <mesh position={[0, 0.02, -tableDepth / 2]} receiveShadow castShadow>
-        <boxGeometry args={[tableWidth + 0.02, edgeThickness, edgeThickness]} />
-        <meshStandardMaterial color="#1a0f05" roughness={0.5} metalness={0.1} />
-      </mesh>
-      {/* Tabletop edge trim - left */}
-      <mesh position={[-tableWidth / 2, 0.02, 0]} receiveShadow castShadow>
-        <boxGeometry args={[edgeThickness, edgeThickness, tableDepth]} />
-        <meshStandardMaterial color="#1a0f05" roughness={0.5} metalness={0.1} />
-      </mesh>
-      {/* Tabletop edge trim - right */}
-      <mesh position={[tableWidth / 2, 0.02, 0]} receiveShadow castShadow>
-        <boxGeometry args={[edgeThickness, edgeThickness, tableDepth]} />
-        <meshStandardMaterial color="#1a0f05" roughness={0.5} metalness={0.1} />
       </mesh>
 
       {/* Under-desk support beam */}
