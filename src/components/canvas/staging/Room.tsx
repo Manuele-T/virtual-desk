@@ -1,6 +1,21 @@
 import React, { useMemo } from 'react';
 import { useStore } from '@/stores/useStore';
 
+// Wall configuration
+const WALL_HEIGHT = 4;
+const WALL_THICKNESS = 0.1;
+const ROOM_SIZE = 8;
+const WALL_COLOR = '#e8e4df'; // Warm off-white
+const BASEBOARD_HEIGHT = 0.15;
+const BASEBOARD_COLOR = '#2a2a2a';
+
+// Window configuration
+const WINDOW_WIDTH = 2.5;
+const WINDOW_HEIGHT = 2;
+const WINDOW_Y = 1.5; // Height from floor
+const WINDOW_FRAME_THICKNESS = 0.08;
+const WINDOW_FRAME_COLOR = '#1a1a1a';
+
 const Room: React.FC = () => {
   const setOverview = useStore((state) => state.setOverview);
   const viewMode = useStore((state) => state.viewMode);
@@ -59,6 +74,98 @@ const Room: React.FC = () => {
         <planeGeometry args={[20, 20]} />
         <meshStandardMaterial color="#0a0a0c" roughness={0.9} />
       </mesh>
+
+      {/* ========== BACK WALL (with window cutout effect) ========== */}
+      <group position={[0, 0, -ROOM_SIZE / 2]}>
+        {/* Wall section LEFT of window */}
+        <mesh position={[-(WINDOW_WIDTH / 2 + (ROOM_SIZE / 2 - WINDOW_WIDTH / 2) / 2), WALL_HEIGHT / 2, 0]} receiveShadow castShadow>
+          <boxGeometry args={[(ROOM_SIZE / 2 - WINDOW_WIDTH / 2), WALL_HEIGHT, WALL_THICKNESS]} />
+          <meshStandardMaterial color={WALL_COLOR} roughness={0.9} />
+        </mesh>
+        
+        {/* Wall section RIGHT of window */}
+        <mesh position={[(WINDOW_WIDTH / 2 + (ROOM_SIZE / 2 - WINDOW_WIDTH / 2) / 2), WALL_HEIGHT / 2, 0]} receiveShadow castShadow>
+          <boxGeometry args={[(ROOM_SIZE / 2 - WINDOW_WIDTH / 2), WALL_HEIGHT, WALL_THICKNESS]} />
+          <meshStandardMaterial color={WALL_COLOR} roughness={0.9} />
+        </mesh>
+        
+        {/* Wall section ABOVE window */}
+        <mesh position={[0, WINDOW_Y + WINDOW_HEIGHT + (WALL_HEIGHT - WINDOW_Y - WINDOW_HEIGHT) / 2, 0]} receiveShadow castShadow>
+          <boxGeometry args={[WINDOW_WIDTH, WALL_HEIGHT - WINDOW_Y - WINDOW_HEIGHT, WALL_THICKNESS]} />
+          <meshStandardMaterial color={WALL_COLOR} roughness={0.9} />
+        </mesh>
+        
+        {/* Wall section BELOW window */}
+        <mesh position={[0, WINDOW_Y / 2, 0]} receiveShadow castShadow>
+          <boxGeometry args={[WINDOW_WIDTH, WINDOW_Y, WALL_THICKNESS]} />
+          <meshStandardMaterial color={WALL_COLOR} roughness={0.9} />
+        </mesh>
+
+        {/* ========== WINDOW FRAME ========== */}
+        {/* Top frame */}
+        <mesh position={[0, WINDOW_Y + WINDOW_HEIGHT + WINDOW_FRAME_THICKNESS / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_WIDTH + WINDOW_FRAME_THICKNESS * 2, WINDOW_FRAME_THICKNESS, WINDOW_FRAME_THICKNESS]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+        {/* Bottom frame */}
+        <mesh position={[0, WINDOW_Y - WINDOW_FRAME_THICKNESS / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_WIDTH + WINDOW_FRAME_THICKNESS * 2, WINDOW_FRAME_THICKNESS, WINDOW_FRAME_THICKNESS]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+        {/* Left frame */}
+        <mesh position={[-WINDOW_WIDTH / 2 - WINDOW_FRAME_THICKNESS / 2, WINDOW_Y + WINDOW_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_FRAME_THICKNESS, WINDOW_HEIGHT, WINDOW_FRAME_THICKNESS]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+        {/* Right frame */}
+        <mesh position={[WINDOW_WIDTH / 2 + WINDOW_FRAME_THICKNESS / 2, WINDOW_Y + WINDOW_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_FRAME_THICKNESS, WINDOW_HEIGHT, WINDOW_FRAME_THICKNESS]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+        {/* Center vertical divider */}
+        <mesh position={[0, WINDOW_Y + WINDOW_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_FRAME_THICKNESS / 2, WINDOW_HEIGHT, WINDOW_FRAME_THICKNESS / 2]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+        {/* Center horizontal divider */}
+        <mesh position={[0, WINDOW_Y + WINDOW_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[WINDOW_WIDTH, WINDOW_FRAME_THICKNESS / 2, WINDOW_FRAME_THICKNESS / 2]} />
+          <meshStandardMaterial color={WINDOW_FRAME_COLOR} roughness={0.3} metalness={0.1} />
+        </mesh>
+
+        {/* ========== WINDOW GLASS ========== */}
+        <mesh position={[0, WINDOW_Y + WINDOW_HEIGHT / 2, 0]}>
+          <planeGeometry args={[WINDOW_WIDTH, WINDOW_HEIGHT]} />
+          <meshPhysicalMaterial 
+            color="#87ceeb"
+            transparent
+            opacity={0.15}
+            roughness={0}
+            metalness={0.1}
+            transmission={0.9}
+            thickness={0.1}
+          />
+        </mesh>
+
+        {/* Baseboard */}
+        <mesh position={[0, BASEBOARD_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[ROOM_SIZE, BASEBOARD_HEIGHT, 0.02]} />
+          <meshStandardMaterial color={BASEBOARD_COLOR} roughness={0.4} />
+        </mesh>
+      </group>
+
+      {/* ========== LEFT WALL ========== */}
+      <group position={[-ROOM_SIZE / 2, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+        <mesh position={[0, WALL_HEIGHT / 2, 0]} receiveShadow castShadow>
+          <boxGeometry args={[ROOM_SIZE, WALL_HEIGHT, WALL_THICKNESS]} />
+          <meshStandardMaterial color={WALL_COLOR} roughness={0.9} />
+        </mesh>
+        {/* Baseboard */}
+        <mesh position={[0, BASEBOARD_HEIGHT / 2, WALL_THICKNESS / 2 + 0.01]}>
+          <boxGeometry args={[ROOM_SIZE, BASEBOARD_HEIGHT, 0.02]} />
+          <meshStandardMaterial color={BASEBOARD_COLOR} roughness={0.4} />
+        </mesh>
+      </group>
     </group>
   );
 };
